@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/return")
 public class ReturnController {
@@ -20,8 +22,8 @@ public class ReturnController {
     BikeService bikeService;
 
     @RequestMapping
-    public User returnBike(@RequestBody String username){
-        User user = userService.getByUsername(username);
+    public User returnBike(@RequestBody Map<String, String> body){
+        User user = userService.getByUsername(body.get("username"));
         Bike bike = user.getLend_bike();
         if(bike != null && bike.getStatus().equals("Occupied"))
             bike.toggleStatus();
