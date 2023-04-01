@@ -17,8 +17,8 @@ public class UserController {
     private UserService service;
 
     @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody User loginUser){
-        User user = service.login(loginUser.getUsername(), loginUser.getPassword());
+    public Map<String, Object> login(@RequestBody Map<String, String> body){
+        User user = service.login(body.get("username"), body.get("password"));
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("status", HttpStatus.OK);
@@ -41,8 +41,8 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public Map<String, Object> register(@RequestBody User newUser){
-        User user = service.register(newUser.getUsername(), newUser.getPassword(), newUser.getEmail());
+    public Map<String, Object> register(@RequestBody Map<String, String> body){
+        User user = service.register(body.get("username"), body.get("password"), body.get("email"));
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("status", HttpStatus.OK);
@@ -75,6 +75,8 @@ public class UserController {
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("username", user.getUsername());
             data.put("email", user.getEmail());
+            data.put("lend_status", user.isLendBike());
+            data.put("lend_date_time", user.getLendDateTime());
 
             map.put("data", data);
         }
