@@ -20,4 +20,12 @@ public class BikeService {
     public Bike create(Bike bike){
         return bikeRepository.save(bike);
     }
+
+    public Bike update(Bike bike){
+        return bikeRepository.save(bike);
+    }
+
+    public Bike getByToken(String token){
+        return bikeRepository.findBikeByToken(token);
+    }
 }
