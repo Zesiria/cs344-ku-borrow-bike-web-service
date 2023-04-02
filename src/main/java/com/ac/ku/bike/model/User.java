@@ -75,4 +75,10 @@ public class User {
     public void setLendTime(String lendDateTime) {
         this.lendDateTime = lendDateTime;
     }
+
+    public boolean isLendBike(){
+        if(lend_bike == null)
+            return false;
+        return true;
+    }
 }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/lend")
 public class LendController {
@@ -21,10 +23,10 @@ public class LendController {
     UserService userService;
 
     @RequestMapping
-    public Bike lend(@RequestBody String token, @RequestBody String username){
-        Bike bike = bikeService.getByToken(token);
+    public Bike lend(@RequestBody Map<String, String> body){
+        Bike bike = bikeService.getByToken(body.get("token"));
         if(bike != null){
-            User user = userService.getByUsername(username);
+            User user = userService.getByUsername(body.get("username"));
             user.setLend_bike(bike);
             bike.toggleStatus();
             userService.update(user);
