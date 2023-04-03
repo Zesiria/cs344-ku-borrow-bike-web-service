@@ -72,8 +72,14 @@ public class User {
         return lendDateTime;
     }
 
-    public void setLendTime(String lendDateTime) {
-        this.lendDateTime = lendDateTime;
+    public void setLendTimeNow() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        this.lendDateTime = dtf.format(now);
+    }
+
+    public void setLendTimeNull() {
+        this.lendDateTime = null;
     }
 
     public boolean isLendBike(){
