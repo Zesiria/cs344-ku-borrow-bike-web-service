@@ -42,25 +42,10 @@ public class UserController {
 
     @PostMapping("/register")
     public Map<String, Object> register(@RequestBody Map<String, String> body){
-        User user = service.register(body.get("username"), body.get("password"), body.get("email"));
+        Map<String, Object> data = service.register(body.get("username"), body.get("password"), body.get("email"));
+        data.put("status", HttpStatus.OK);
 
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("status", HttpStatus.OK);
-        if(user != null) {
-            map.put("message", "Successfully registered");
-
-            Map<String, Object> data = new HashMap<String, Object>();
-            data.put("username", user.getUsername());
-            data.put("email", user.getEmail());
-
-            map.put("data", data);
-        }
-        else {
-            map.put("message", "Fail to registered");
-            map.put("status", HttpStatus.OK);
-        }
-
-        return map;
+        return data;
     }
 
     @PostMapping("/login/token")
