@@ -60,6 +60,7 @@ public class UserController {
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("username", user.getUsername());
             data.put("email", user.getEmail());
+            data.put("token", user.getToken());
             data.put("lend_status", user.isLendBike());
             data.put("lend_date_time", user.getLendDateTime());
 
