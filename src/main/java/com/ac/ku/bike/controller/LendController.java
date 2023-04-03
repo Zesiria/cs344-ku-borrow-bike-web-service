@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -23,15 +24,23 @@ public class LendController {
     UserService userService;
 
     @RequestMapping
-    public Bike lend(@RequestBody Map<String, String> body){
+    public Map<String, Object> lend(@RequestBody Map<String, String> body){
         Bike bike = bikeService.getByToken(body.get("token"));
-        if(bike != null){
+        Map<String, Object> data = new HashMap<String, Object>();
+        if(bike != null && bike.getStatus().equals("Not Occupied")){
             User user = userService.getByUsername(body.get("username"));
-            user.setLend_bike(bike);
             bike.toggleStatus();
+            user.setLend_bike(bike);
+            user.setLendTimeNow();
             userService.update(user);
             bikeService.update(bike);
+            data.put("message", "Successfully lend bike.");
+            data.put("bike", bike);
+            data.put("user", user);
         }
-        return bike;
+        else{
+            data.put("message","This bike is already occupied.");
+        }
+        return data;
     }
 }

@@ -1,19 +1,18 @@
 package com.ac.ku.bike.model;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 public class Bike {
 
     @Id
     @GeneratedValue
-    private UUID bike_id;
+    private int bike_id;
 
     @Column(unique = true)
     private String token;
 
-    private String status = "Not occupied";
+    private String status = "Not Occupied";
 
     @OneToOne(mappedBy = "lend_bike")
     private User user = null;
@@ -25,7 +24,7 @@ public class Bike {
             this.status = "Occupied";
     }
 
-    public UUID getBike_id() {
+    public int getBike_id() {
         return bike_id;
     }
 
