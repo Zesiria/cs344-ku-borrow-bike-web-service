@@ -54,7 +54,7 @@ public class UserService {
         }
         User user = new User(username, password, email);
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("message", "Username already exists.");
+        data.put("message", "Successfully registered.");
         data.put("user", create(user));
         return data;
     }
