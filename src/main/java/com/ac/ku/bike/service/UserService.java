@@ -7,6 +7,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class UserService {
 
@@ -42,11 +45,18 @@ public class UserService {
         return userRepository.findUserByToken(token);
     }
 
-    public User register(String username, String password, String email) {
-        //validation sessions
-
+    public Map<String, Object> register(String username, String password, String email) {
+        User checkIfExist = userRepository.findUserByUsername(username);
+        if(checkIfExist != null){
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("message", "Username already exists.");
+            return data;
+        }
         User user = new User(username, password, email);
-        return create(user);
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("message", "Username already exists.");
+        data.put("user", create(user));
+        return data;
     }
 
     public User logout(String username) {
